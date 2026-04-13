@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP Exam Masterclass - Complete Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--border:#2a2a3a;
+--text:#e8e6e3;--muted:#9490a0;--accent:#6c63ff;--accent2:#ff6b9d;
+--green:#4ade80;--yellow:#fbbf24;--cyan:#22d3ee;--orange:#fb923c;
+--code-bg:#0d0d14;--highlight:rgba(108,99,255,0.08);
+}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;line-height:1.85;overflow-x:hidden}
+.grain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:9999}
+.hero{text-align:center;padding:60px 20px 40px;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(108,99,255,0.12) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;background:linear-gradient(135deg,#e8e6e3 30%,#6c63ff 60%,#ff6b9d 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;margin-bottom:8px}
+.hero .sub{color:var(--muted);font-size:1.05rem;margin-bottom:30px}
+.badge-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.badge{background:var(--card);border:1px solid var(--border);padding:6px 16px;border-radius:20px;font-size:.82rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.badge span{color:var(--accent)}
+.container{max-width:900px;margin:0 auto;padding:0 20px 80px}
+.question-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden;transition:border-color .3s}
+.question-card:hover{border-color:rgba(108,99,255,0.3)}
+.q-header{padding:24px 28px;cursor:pointer;display:flex;align-items:center;gap:16px;user-select:none}
+.q-number{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--accent);min-width:46px}
+.q-title{flex:1;font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--text)}
+.q-marks{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent2);background:rgba(255,107,157,0.1);padding:4px 12px;border-radius:12px;white-space:nowrap}
+.q-toggle{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1.2rem;transition:all .3s}
+.question-card.open .q-toggle{transform:rotate(180deg);border-color:var(--accent);color:var(--accent)}
+.q-body{display:none;padding:0 28px 28px}
+.question-card.open .q-body{display:block}
+.section{margin-bottom:28px}
+.section-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--accent);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.section-title .icon{font-size:1.1rem}
+.theory{color:var(--text);margin-bottom:16px;text-align:justify}
+.theory strong{color:var(--cyan)}
+.key-point{background:var(--highlight);border-left:3px solid var(--accent);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.key-point .label{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.code-block{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin:14px 0;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.84rem;line-height:1.7;color:#c9d1d9;position:relative}
+.code-block::before{content:'PHP';position:absolute;top:8px;right:12px;font-size:.65rem;color:var(--accent);background:rgba(108,99,255,0.1);padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:1px}
+.code-block .kw{color:#ff79c6}
+.code-block .fn{color:#50fa7b}
+.code-block .str{color:#f1fa8c}
+.code-block .var{color:#8be9fd}
+.code-block .cm{color:#6272a4}
+.code-block .num{color:#bd93f9}
+.output-block{background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.15);border-radius:8px;padding:12px 16px;margin:8px 0 16px;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--green)}
+.output-block::before{content:'OUTPUT';font-size:.65rem;color:var(--green);letter-spacing:1.5px;display:block;margin-bottom:6px;opacity:.7}
+.comparison-table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.comparison-table th{background:var(--card);padding:12px 16px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.comparison-table td{padding:10px 16px;border-top:1px solid var(--border);font-size:.92rem}
+.comparison-table tr:nth-child(even) td{background:rgba(255,255,255,0.01)}
+.tip-box{background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.15);border-radius:10px;padding:14px 18px;margin:16px 0;font-size:.92rem}
+.tip-box::before{content:'💡 EXAM TIP';font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--yellow);letter-spacing:1px;display:block;margin-bottom:6px}
+.sub-section{margin:18px 0;padding-left:16px;border-left:2px solid var(--border)}
+.sub-section h4{font-family:'Playfair Display',serif;font-size:1.02rem;color:var(--orange);margin-bottom:8px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;margin-right:8px;flex-shrink:0}
+.step-row{display:flex;align-items:flex-start;gap:4px;margin:12px 0}
+.footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border)}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:10000;transition:width .3s}
+@media(max-width:600px){
+.q-header{padding:16px;gap:10px}
+.q-body{padding:0 16px 20px}
+.q-number{font-size:1.3rem;min-width:36px}
+.q-title{font-size:1rem}
+.code-block{padding:12px 14px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="hero">
+<h1>PHP Exam Masterclass</h1>
+<p class="sub">Complete Step-by-Step Guide — 7 Questions × 10 Marks Each</p>
+<div class="badge-row">
+<div class="badge"><span>70</span> Total Marks</div>
+<div class="badge"><span>7</span> Questions</div>
+<div class="badge"><span>PHP</span> Server-Side</div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- QUESTION 1 -->
+<div class="question-card" id="q1">
+<div class="q-header" onclick="toggle('q1')">
+<div class="q-number">Q1</div>
+<div class="q-title">Explain Various Scalar Data Types in PHP with Examples</div>
+<div class="q-marks">10 Marks</div>
+<div class="q-toggle">▼</div>
+</div>
+<div class="q-body">
+
+<div class="section">
+<div class="section-title"><span class="icon">📘</span> Introduction — What Are Scalar Data Types?</div>
+<p class="theory">In any programming language, the concept of <strong>data types</strong> is absolutely fundamental because data types tell the compiler or the interpreter what kind of value a particular variable is going to hold during the execution of a program. PHP, being a dynamically typed and loosely typed scripting language, provides a rich set of data types that allow developers to work with many different kinds of information. Among these, <strong>scalar data types</strong> are considered the most basic and most commonly used category of data types in PHP.</p>
+<p class="theory">The word <strong>"scalar"</strong> comes from mathematics and it simply means a single value — that is, a value that holds only one piece of information at a time. Unlike compound data types (such as arrays and objects) which can store multiple values together as a collection, a scalar data type stores exactly one value. In PHP, there are precisely <strong>four scalar data types</strong>, and every PHP programmer must understand all four of them thoroughly. These four scalar types are: <strong>Integer</strong>, <strong>Float (also called Double)</strong>, <strong>String</strong>, and <strong>Boolean</strong>. Let us now study each one of them in great detail with clear examples and explanations.</p>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">1️⃣</span> Integer Data Type</div>
+<p class="theory"><strong>Definition:</strong> An Integer in PHP is a whole number — a number that does not have any decimal point or fractional part. It can be a positive number, a negative number, or zero. Integers are the simplest numeric data type available in PHP and they are used extensively whenever we need to work with whole numbers such as counting items, representing ages, storing quantities, tracking loop counters, and performing mathematical calculations that do not require decimal precision.</p>
+<p class="theory">In PHP, integers can be specified in several different number systems or bases. The most common format is <strong>decimal (base 10)</strong>, which is the standard numbering system that we use in our everyday life. However, PHP also supports <strong>hexadecimal (base 16)</strong> integers which are written with a 0x prefix, <strong>octal (base 8)</strong> integers written with a leading 0 prefix, and <strong>binary (base 2)</strong> integers written with a 0b prefix. The maximum size of an integer depends on the platform — on a 64-bit system, PHP can handle integers up to approximately 9.2 quintillion (9,223,372,036,854,775,807).</p>
+<div class="key-point">
+<div class="label">Key Characteristics</div>
+Integers have no decimal point, can be positive or negative, support decimal/octal/hexadecimal/binary notation, and PHP automatically converts an integer to float if it exceeds the maximum size (integer overflow).
+</div>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Declaring integer variables</span><br>
+&nbsp;&nbsp;<span class="var">$age</span> = <span class="num">25</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Positive decimal integer</span><br>
+&nbsp;&nbsp;<span class="var">$temperature</span> = -<span class="num">10</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Negative integer</span><br>
+&nbsp;&nbsp;<span class="var">$zero</span> = <span class="num">0</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Zero is also an integer</span><br>
+&nbsp;&nbsp;<span class="var">$hex</span> = <span class="num">0x1A</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Hexadecimal (equals 26)</span><br>
+&nbsp;&nbsp;<span class="var">$oct</span> = <span class="num">075</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Octal (equals 61)</span><br>
+&nbsp;&nbsp;<span class="var">$bin</span> = <span class="num">0b1010</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Binary (equals 10)</span><br><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$age</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: 25</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">gettype</span>(<span class="var">$age</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: integer</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">is_int</span>(<span class="var">$age</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: 1 (true)</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">25<br>integer<br>1</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">2️⃣</span> Float (Double) Data Type</div>
+<p class="theory"><strong>Definition:</strong> A Float (which is also known as a Double or a floating-point number) is a number that contains a <strong>decimal point</strong> or a number that is expressed in <strong>exponential (scientific) notation</strong>. Floats are essential in PHP whenever we need to perform calculations that require decimal precision — for example, working with monetary values, scientific calculations, percentages, measurements, statistical computations, and any arithmetic that goes beyond whole numbers.</p>
+<p class="theory">The term "floating point" refers to the fact that the decimal point can "float" to different positions within the number, allowing the representation of both very large numbers and very small fractions. PHP uses the <strong>IEEE 754 double precision format</strong> for storing floating-point numbers, which provides approximately 14 digits of decimal precision. One very important thing to remember for examinations is that floating-point arithmetic can sometimes produce unexpected results due to the way computers represent decimal fractions in binary — for example, the expression (0.1 + 0.2) may not be exactly equal to 0.3 in PHP due to floating-point rounding errors.</p>
+<div class="key-point">
+<div class="label">Key Characteristics</div>
+Floats contain a decimal point or use exponential notation (e.g., 2.5e3 = 2500). They have approximately 14 digits of precision. PHP provides is_float() function to check if a value is a float.
+</div>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$price</span> = <span class="num">99.99</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Standard float</span><br>
+&nbsp;&nbsp;<span class="var">$scientific</span> = <span class="num">2.5e3</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Exponential notation (2500)</span><br>
+&nbsp;&nbsp;<span class="var">$negative</span> = -<span class="num">15.75</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Negative float</span><br>
+&nbsp;&nbsp;<span class="var">$tiny</span> = <span class="num">7.2e-3</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Very small number (0.0072)</span><br><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$price</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: 99.99</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">gettype</span>(<span class="var">$price</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: double</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">is_float</span>(<span class="var">$price</span>); &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: 1 (true)</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">99.99<br>double<br>1</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">3️⃣</span> String Data Type</div>
+<p class="theory"><strong>Definition:</strong> A String in PHP is a <strong>sequence of characters</strong> — essentially, it is a piece of text. A string can contain letters, numbers, special characters, whitespace, or any combination of these. Strings are one of the most widely used data types in PHP because web applications constantly deal with text data — displaying user names, processing form inputs, generating HTML content, handling URLs, reading files, working with databases, and much more.</p>
+<p class="theory">In PHP, strings can be declared in <strong>four different ways</strong>. The two most common methods are using <strong>single quotes (' ')</strong> and <strong>double quotes (" ")</strong>. The key difference between them is that double-quoted strings support <strong>variable interpolation</strong> (meaning PHP will automatically replace variable names inside the string with their values) and <strong>escape sequences</strong> (such as \n for newline, \t for tab), whereas single-quoted strings treat everything literally except for the escaped single quote (\') and escaped backslash (\\). The other two methods are <strong>heredoc syntax</strong> (which behaves like double quotes) and <strong>nowdoc syntax</strong> (which behaves like single quotes), both of which are used for multi-line strings. PHP also provides a vast collection of built-in string functions such as strlen(), strtoupper(), strtolower(), substr(), strpos(), str_replace(), and many more.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Single-quoted string</span><br>
+&nbsp;&nbsp;<span class="var">$name</span> = <span class="str">'John Doe'</span>;<br><br>
+&nbsp;&nbsp;<span class="cm">// Double-quoted string with variable interpolation</span><br>
+&nbsp;&nbsp;<span class="var">$greeting</span> = <span class="str">"Hello, <span class="var">$name</span>! Welcome."</span>;<br><br>
+&nbsp;&nbsp;<span class="cm">// String with escape sequences</span><br>
+&nbsp;&nbsp;<span class="var">$message</span> = <span class="str">"Line 1\nLine 2\tTabbed"</span>;<br><br>
+&nbsp;&nbsp;<span class="cm">// String functions</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">strlen</span>(<span class="var">$name</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: 8</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">strtoupper</span>(<span class="var">$name</span>); &nbsp;&nbsp;<span class="cm">// Output: JOHN DOE</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$greeting</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: Hello, John Doe! Welcome.</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">8<br>JOHN DOE<br>Hello, John Doe! Welcome.</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">4️⃣</span> Boolean Data Type</div>
+<p class="theory"><strong>Definition:</strong> A Boolean is the simplest data type in PHP. It represents a <strong>truth value</strong> and can hold only one of two possible values: <strong>true</strong> or <strong>false</strong>. Booleans are named after the mathematician George Boole, who is famous for developing Boolean algebra — the mathematical foundation of all digital logic and computer science. In PHP, booleans are primarily used for <strong>conditional testing</strong> — that is, they are used in if-else statements, while loops, comparison operations, logical operations, and any situation where the program needs to make a decision based on whether a condition is true or false.</p>
+<p class="theory">PHP performs automatic <strong>type casting to boolean</strong> in many situations. The following values are considered <strong>false</strong> when converted to boolean: the integer 0, the float 0.0, an empty string "", the string "0", an empty array [], the special type NULL, and SimpleXML objects created from empty elements. Every other value is considered <strong>true</strong>, including negative numbers, non-empty strings, and arrays with at least one element. Understanding this type casting behaviour is extremely important because it affects how conditional statements evaluate their conditions in PHP programs.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$is_logged_in</span> = <span class="kw">true</span>;<br>
+&nbsp;&nbsp;<span class="var">$has_permission</span> = <span class="kw">false</span>;<br><br>
+&nbsp;&nbsp;<span class="cm">// Using boolean in conditional statement</span><br>
+&nbsp;&nbsp;<span class="kw">if</span> (<span class="var">$is_logged_in</span>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"Welcome! You are logged in."</span>;<br>
+&nbsp;&nbsp;} <span class="kw">else</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"Please log in first."</span>;<br>
+&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;<span class="cm">// Type casting to boolean</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>((<span class="kw">bool</span>)<span class="num">0</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// bool(false)</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>((<span class="kw">bool</span>)<span class="num">1</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// bool(true)</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>((<span class="kw">bool</span>)<span class="str">""</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// bool(false)</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>((<span class="kw">bool</span>)<span class="str">"Hello"</span>); &nbsp;&nbsp;<span class="cm">// bool(true)</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Welcome! You are logged in.<br>bool(false)<br>bool(true)<br>bool(false)<br>bool(true)</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">📊</span> Summary Table</div>
+<table class="comparison-table">
+<tr><th>Data Type</th><th>Stores</th><th>Example</th><th>Check Function</th></tr>
+<tr><td>Integer</td><td>Whole numbers</td><td>25, -10, 0</td><td>is_int()</td></tr>
+<tr><td>Float</td><td>Decimal numbers</td><td>99.99, 2.5e3</td><td>is_float()</td></tr>
+<tr><td>String</td><td>Text / characters</td><td>"Hello", 'PHP'</td><td>is_string()</td></tr>
+<tr><td>Boolean</td><td>true / false</td><td>true, false</td><td>is_bool()</td></tr>
+</table>
+</div>
+
+<div class="tip-box">
+For 10-mark answers, always start with a clear definition, mention all four types, give at least one example for each type with output, and conclude with a summary comparison table. This structure guarantees full marks.
+</div>
+
+</div>
+</div>
+
+<!-- QUESTION 2 -->
+<div class="question-card" id="q2">
+<div class="q-header" onclick="toggle('q2')">
+<div class="q-number">Q2</div>
+<div class="q-title">Explain Miscellaneous Operators in PHP with Examples</div>
+<div class="q-marks">10 Marks</div>
+<div class="q-toggle">▼</div>
+</div>
+<div class="q-body">
+
+<div class="section">
+<div class="section-title"><span class="icon">📘</span> Introduction — What Are Miscellaneous Operators?</div>
+<p class="theory">PHP provides a very extensive and well-organized collection of operators that are used to perform various types of operations on variables and values. While most programmers are familiar with the common categories of operators — such as arithmetic operators (+, -, *, /), assignment operators (=), comparison operators (==, ===, !=), and logical operators (&&, ||, !) — there exists a special group of operators in PHP that do not fit neatly into any of these standard categories. These are collectively referred to as <strong>Miscellaneous Operators</strong>.</p>
+<p class="theory">Miscellaneous operators in PHP serve unique and specialized purposes that are not covered by the regular operator categories. They provide powerful shortcuts and capabilities that make PHP code more concise, more robust, and easier to maintain. Understanding these operators is essential for every PHP developer because they are frequently used in real-world applications, especially for error handling, shell command execution, type checking, and handling null values gracefully. PHP provides four main miscellaneous operators: the <strong>Execution Operator</strong> (backticks), the <strong>Error Control Operator</strong> (@), the <strong>Type Operator</strong> (instanceof), and the <strong>Null Coalescing Operator</strong> (??).</p>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">1️⃣</span> Execution Operator (Backticks ` `)</div>
+<p class="theory"><strong>Definition:</strong> The Execution Operator in PHP uses <strong>backtick characters (` `)</strong> to execute shell commands directly from within a PHP script. Whatever command is placed between the backtick characters is sent to the operating system's command shell for execution, and the output of that command is returned as a string that can be stored in a variable, displayed on screen, or processed further. This operator is functionally equivalent to calling the PHP function <strong>shell_exec()</strong>, and it provides a convenient shorthand for running system-level commands.</p>
+<p class="theory">This operator is particularly useful when PHP applications need to interact with the underlying operating system — for example, listing files in a directory, checking system information, running database backup scripts, or executing any other command-line utility. However, it is important to note that using the execution operator requires careful attention to <strong>security</strong>, because if user input is passed directly into a shell command without proper sanitization, it can lead to a dangerous vulnerability known as <strong>command injection</strong>. The execution operator is disabled when PHP is running in <strong>safe mode</strong> or when the shell_exec() function has been disabled for security reasons.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Using backticks to execute a shell command</span><br>
+&nbsp;&nbsp;<span class="var">$output</span> = `ls -la`; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Linux: list files</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"&lt;pre&gt;<span class="var">$output</span>&lt;/pre&gt;"</span>;<br><br>
+&nbsp;&nbsp;<span class="cm">// Windows equivalent</span><br>
+&nbsp;&nbsp;<span class="var">$output</span> = `dir`; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Windows: list files</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$output</span>;<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Displays the list of files and directories from the server's file system.</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">2️⃣</span> Error Control Operator (@)</div>
+<p class="theory"><strong>Definition:</strong> The Error Control Operator in PHP is the <strong>at symbol (@)</strong>. When this operator is placed immediately before any PHP expression, it <strong>suppresses (hides) any error messages</strong> that would normally be generated by that expression. This means that even if the expression causes an error — such as a warning, a notice, or a fatal error — the error message will not be displayed to the user or recorded in the error log (depending on the configuration).</p>
+<p class="theory">This operator is commonly used in situations where a developer anticipates that a certain operation might fail and wants to handle the failure gracefully without showing ugly error messages to the end user. A very common use case is when opening a file that might not exist, connecting to a database that might be offline, or dividing by a variable that could potentially be zero. However, it is generally considered <strong>bad practice</strong> to overuse the error control operator because suppressing errors can make debugging extremely difficult. Errors exist for a reason — they tell us that something is wrong in our code. A better approach is to use proper error handling techniques such as <strong>try-catch blocks</strong> and <strong>conditional checks</strong> instead of blindly suppressing errors.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Without @ operator — this would show an error</span><br>
+&nbsp;&nbsp;<span class="cm">// if "nonexistent.txt" does not exist</span><br><br>
+&nbsp;&nbsp;<span class="cm">// With @ operator — error is suppressed</span><br>
+&nbsp;&nbsp;<span class="var">$file</span> = @<span class="fn">fopen</span>(<span class="str">"nonexistent.txt"</span>, <span class="str">"r"</span>);<br><br>
+&nbsp;&nbsp;<span class="kw">if</span> (<span class="var">$file</span> === <span class="kw">false</span>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"File could not be opened."</span>;<br>
+&nbsp;&nbsp;} <span class="kw">else</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"File opened successfully."</span>;<br>
+&nbsp;&nbsp;}<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">File could not be opened.</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">3️⃣</span> Type Operator (instanceof)</div>
+<p class="theory"><strong>Definition:</strong> The <strong>instanceof</strong> operator is a type-checking operator in PHP that is used to determine whether a given object is an <strong>instance (object) of a specific class</strong>, or whether it is an instance of a class that <strong>inherits from</strong> (extends) a specific parent class, or whether it <strong>implements</strong> a specific interface. This operator returns a boolean value — it returns <strong>true</strong> if the object is an instance of the specified class or interface, and <strong>false</strong> otherwise.</p>
+<p class="theory">The instanceof operator is extremely useful in <strong>Object-Oriented Programming (OOP)</strong> when working with class hierarchies and polymorphism. For example, if you have a function that receives an object as a parameter, you might want to check what type of object it is before performing certain operations on it. This is especially important when you have multiple classes that inherit from a common parent class, or when you have classes that implement a common interface. The instanceof operator helps ensure <strong>type safety</strong> in your code and prevents runtime errors that could occur if you try to call a method on an object that does not support it.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="kw">class</span> <span class="fn">Animal</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">public</span> <span class="var">$name</span>;<br>
+&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;<span class="kw">class</span> <span class="fn">Dog</span> <span class="kw">extends</span> <span class="fn">Animal</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">public</span> <span class="kw">function</span> <span class="fn">bark</span>() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">"Woof!"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;<span class="var">$myDog</span> = <span class="kw">new</span> <span class="fn">Dog</span>();<br><br>
+&nbsp;&nbsp;<span class="cm">// Check if $myDog is an instance of Dog</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>(<span class="var">$myDog</span> <span class="kw">instanceof</span> <span class="fn">Dog</span>); &nbsp;&nbsp;&nbsp;<span class="cm">// true</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>(<span class="var">$myDog</span> <span class="kw">instanceof</span> <span class="fn">Animal</span>); <span class="cm">// true (inherits)</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">bool(true)<br>bool(true)</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">4️⃣</span> Null Coalescing Operator (??)</div>
+<p class="theory"><strong>Definition:</strong> The Null Coalescing Operator (<strong>??</strong>) was introduced in <strong>PHP 7.0</strong> and it provides an extremely convenient and elegant way to handle situations where a variable might be <strong>null</strong> or might not even exist at all. This operator takes two operands: it returns the <strong>first operand</strong> if that operand exists and is <strong>not null</strong>; otherwise, it returns the <strong>second operand</strong> as a fallback or default value.</p>
+<p class="theory">Before the introduction of the null coalescing operator, PHP developers had to write verbose code using the isset() function combined with ternary operators to achieve the same result. For example, the old way would be: <strong>$username = isset($_GET['user']) ? $_GET['user'] : 'Guest';</strong> — but with the null coalescing operator, this can be simplified to: <strong>$username = $_GET['user'] ?? 'Guest';</strong>. This makes the code much shorter, much more readable, and much easier to maintain. Furthermore, the null coalescing operator can be <strong>chained</strong> — meaning you can provide multiple fallback values, and PHP will return the first non-null value it encounters from left to right.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Basic usage — providing a default value</span><br>
+&nbsp;&nbsp;<span class="var">$username</span> = <span class="var">$_GET</span>[<span class="str">'user'</span>] ?? <span class="str">'Guest'</span>;<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$username</span>; <span class="cm">// Output: Guest (if 'user' not set)</span><br><br>
+&nbsp;&nbsp;<span class="cm">// Chaining multiple fallback values</span><br>
+&nbsp;&nbsp;<span class="var">$color</span> = <span class="var">$_GET</span>[<span class="str">'color'</span>] ?? <span class="var">$defaultColor</span> ?? <span class="str">'blue'</span>;<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$color</span>; <span class="cm">// Output: blue</span><br><br>
+&nbsp;&nbsp;<span class="cm">// Variable that exists and is not null</span><br>
+&nbsp;&nbsp;<span class="var">$name</span> = <span class="str">"Alice"</span>;<br>
+&nbsp;&nbsp;<span class="var">$result</span> = <span class="var">$name</span> ?? <span class="str">"Unknown"</span>;<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$result</span>; <span class="cm">// Output: Alice</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Guest<br>blue<br>Alice</div>
+</div>
+
+<div class="tip-box">
+Write all four operators clearly: Execution (` `), Error Control (@), Type (instanceof), and Null Coalescing (??). Give each a definition, explain its purpose, and provide a working code example. For extra impression, mention when each was introduced (e.g., ?? in PHP 7).
+</div>
+
+</div>
+</div>
+
+<!-- QUESTION 3 -->
+<div class="question-card" id="q3">
+<div class="q-header" onclick="toggle('q3')">
+<div class="q-number">Q3</div>
+<div class="q-title">Explain Compound and Special Data Types in PHP with Examples</div>
+<div class="q-marks">10 Marks</div>
+<div class="q-toggle">▼</div>
+</div>
+<div class="q-body">
+
+<div class="section">
+<div class="section-title"><span class="icon">📘</span> Introduction</div>
+<p class="theory">As we have already learned, PHP supports scalar data types that can hold only a single value at a time. However, in real-world programming, we frequently need to work with <strong>collections of data</strong> and <strong>complex structures</strong> that go far beyond simple single values. This is where <strong>Compound Data Types</strong> come into the picture. Additionally, PHP provides <strong>Special Data Types</strong> that represent unusual or unique kinds of values that do not fit into either the scalar or compound categories. Together, compound and special data types give PHP the flexibility and power needed to build sophisticated web applications. PHP has two compound data types — <strong>Array</strong> and <strong>Object</strong> — and two special data types — <strong>NULL</strong> and <strong>Resource</strong>.</p>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">📦</span> PART A — Compound Data Types</div>
+
+<div class="sub-section">
+<h4>1. Array</h4>
+<p class="theory"><strong>Definition:</strong> An Array in PHP is a compound data type that can store <strong>multiple values</strong> in a single variable. Instead of declaring separate variables for each piece of related data, an array allows you to group all of those values together under one variable name and access them using <strong>indices</strong> (for indexed arrays) or <strong>keys</strong> (for associative arrays). Arrays are one of the most powerful and most frequently used data structures in PHP, and they are used in nearly every PHP application for storing lists of items, database query results, form data, configuration settings, and much more.</p>
+<p class="theory">PHP supports three types of arrays: <strong>Indexed Arrays</strong> (where elements are accessed using numeric indices starting from 0), <strong>Associative Arrays</strong> (where elements are accessed using named keys that you define), and <strong>Multidimensional Arrays</strong> (which are arrays containing other arrays, creating a matrix-like structure). Arrays in PHP are extremely flexible — they can hold values of different data types simultaneously, they can grow and shrink dynamically, and PHP provides over 80 built-in functions for sorting, searching, filtering, merging, and manipulating arrays.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Indexed Array</span><br>
+&nbsp;&nbsp;<span class="var">$fruits</span> = <span class="fn">array</span>(<span class="str">"Apple"</span>, <span class="str">"Banana"</span>, <span class="str">"Orange"</span>);<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$fruits</span>[<span class="num">0</span>]; <span class="cm">// Output: Apple</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$fruits</span>[<span class="num">1</span>]; <span class="cm">// Output: Banana</span><br><br>
+&nbsp;&nbsp;<span class="cm">// Associative Array</span><br>
+&nbsp;&nbsp;<span class="var">$student</span> = [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span> => <span class="str">"Rahul"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"age"</span> &nbsp;=> <span class="num">21</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"grade"</span> => <span class="str">"A"</span><br>
+&nbsp;&nbsp;];<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$student</span>[<span class="str">"name"</span>]; <span class="cm">// Output: Rahul</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Apple<br>Banana<br>Rahul</div>
+</div>
+
+<div class="sub-section">
+<h4>2. Object</h4>
+<p class="theory"><strong>Definition:</strong> An Object in PHP is an instance of a <strong>class</strong>. In Object-Oriented Programming (OOP), a class is like a blueprint or template that defines the properties (data) and methods (functions) that its objects will have. When we create an object from a class, we are creating a specific instance of that blueprint with its own set of data values. Objects are the cornerstone of modern PHP development because they allow developers to organize code into logical, reusable, and maintainable units using the principles of <strong>encapsulation</strong>, <strong>inheritance</strong>, and <strong>polymorphism</strong>.</p>
+<p class="theory">To create an object in PHP, you must first define a class using the <strong>class</strong> keyword, then create an instance of that class using the <strong>new</strong> keyword. The class can contain <strong>properties</strong> (variables that belong to the object) and <strong>methods</strong> (functions that belong to the object). Inside a method, you use the special variable <strong>$this</strong> to refer to the current object and access its properties and methods.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="kw">class</span> <span class="fn">Fruit</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">public</span> <span class="var">$name</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">public</span> <span class="var">$color</span>;<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">public function</span> <span class="fn">setName</span>(<span class="var">$name</span>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="var">$this</span>-><span class="var">name</span> = <span class="var">$name</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">public function</span> <span class="fn">getName</span>() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="var">$this</span>-><span class="var">name</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;<span class="var">$apple</span> = <span class="kw">new</span> <span class="fn">Fruit</span>();<br>
+&nbsp;&nbsp;<span class="var">$apple</span>-><span class="fn">setName</span>(<span class="str">"Apple"</span>);<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$apple</span>-><span class="fn">getName</span>(); <span class="cm">// Output: Apple</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Apple</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">⭐</span> PART B — Special Data Types</div>
+
+<div class="sub-section">
+<h4>1. NULL</h4>
+<p class="theory"><strong>Definition:</strong> NULL is a special data type in PHP that represents a variable that has <strong>no value at all</strong>. It is important to understand that NULL is not the same as zero (0), not the same as an empty string (""), and not the same as false. NULL literally means the <strong>absence of any value</strong> — the variable exists in memory, but it does not point to any meaningful data. A variable can become NULL in three specific situations: (1) when it has been explicitly assigned the constant <strong>NULL</strong>, (2) when it has been declared but has <strong>not yet been assigned</strong> any value, and (3) when it has been <strong>unset()</strong> — that is, its value has been deliberately destroyed using the unset() function.</p>
+<p class="theory">PHP provides the <strong>is_null()</strong> function to check whether a variable is NULL. You can also use the identical comparison operator (===) to compare a variable with NULL. Understanding the NULL data type is important because it helps prevent unexpected behaviour in your programs — for example, performing arithmetic operations on NULL values, or trying to access properties of a NULL object, can lead to warnings and errors.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$x</span> = <span class="kw">NULL</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Explicitly assigned NULL</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>(<span class="var">$x</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: NULL</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">is_null</span>(<span class="var">$x</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: 1 (true)</span><br><br>
+&nbsp;&nbsp;<span class="var">$y</span> = <span class="str">"Hello"</span>;<br>
+&nbsp;&nbsp;<span class="fn">unset</span>(<span class="var">$y</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// $y is now NULL/undefined</span><br>
+&nbsp;&nbsp;<span class="kw">var_dump</span>(<span class="fn">isset</span>(<span class="var">$y</span>)); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: bool(false)</span><br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">NULL<br>1<br>bool(false)</div>
+</div>
+
+<div class="sub-section">
+<h4>2. Resource</h4>
+<p class="theory"><strong>Definition:</strong> A Resource is a special data type in PHP that holds a <strong>reference to an external resource</strong> — that is, it acts as a pointer or handle to something that exists outside of PHP's own memory space. The most common examples of resources include <strong>database connections</strong> (such as a MySQL connection handle), <strong>file handles</strong> (returned when you open a file using fopen()), <strong>image canvases</strong> (created by the GD library for image manipulation), and <strong>cURL sessions</strong> (used for making HTTP requests).</p>
+<p class="theory">Resources are created and managed by PHP's built-in functions — you cannot directly create a resource variable yourself. When a resource is no longer needed, PHP's garbage collector automatically frees the memory associated with it, although it is considered good practice to explicitly close or free resources when you are done with them (for example, using fclose() for file handles and mysqli_close() for database connections). You can use the <strong>is_resource()</strong> function to check if a variable is a resource, and the <strong>get_resource_type()</strong> function to find out what type of resource it is.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Opening a file — returns a resource</span><br>
+&nbsp;&nbsp;<span class="var">$file</span> = <span class="fn">fopen</span>(<span class="str">"test.txt"</span>, <span class="str">"r"</span>);<br><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">gettype</span>(<span class="var">$file</span>); &nbsp;&nbsp;&nbsp;<span class="cm">// Output: resource</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="fn">get_resource_type</span>(<span class="var">$file</span>); <span class="cm">// Output: stream</span><br><br>
+&nbsp;&nbsp;<span class="cm">// Always close the resource when done</span><br>
+&nbsp;&nbsp;<span class="fn">fclose</span>(<span class="var">$file</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">resource<br>stream</div>
+</div>
+</div>
+
+<div class="tip-box">
+Clearly separate your answer into Part A (Compound) and Part B (Special). Cover all four types: Array, Object, NULL, Resource. Use class-based examples for Object, and mention is_null() and is_resource() functions.
+</div>
+
+</div>
+</div>
+
+<!-- QUESTION 4 -->
+<div class="question-card" id="q4">
+<div class="q-header" onclick="toggle('q4')">
+<div class="q-number">Q4</div>
+<div class="q-title">Creating & Manipulating Indexed Arrays and Associative Arrays in PHP</div>
+<div class="q-marks">10 Marks</div>
+<div class="q-toggle">▼</div>
+</div>
+<div class="q-body">
+
+<div class="section">
+<div class="section-title"><span class="icon">📘</span> PART A — Indexed Arrays</div>
+<p class="theory">An <strong>Indexed Array</strong> in PHP is a type of array where each element is stored and accessed using a <strong>numeric index</strong> (also called a numeric key). The indexing starts from <strong>0</strong> by default — meaning the first element is at index 0, the second element is at index 1, the third at index 2, and so on. Indexed arrays are the most basic and most commonly used form of arrays in PHP, and they are ideal for storing ordered lists of items such as a list of student names, a list of products, a series of scores, or any collection of values where the position (order) of each element matters.</p>
+<p class="theory">Working with indexed arrays in PHP involves several fundamental operations. These operations form the core of array manipulation and include: initializing (creating) the array, adding new elements to the array, accessing existing elements by their index, modifying elements by assigning new values, removing elements using the unset() function, and iterating (looping) through the array to process each element one by one. Let us study each of these six operations in detail with step-by-step examples.</p>
+</div>
+
+<div class="section">
+<div class="step-row"><span class="step-num">1</span><strong>Initialization (Creating an Indexed Array)</strong></div>
+<p class="theory">You can create an indexed array in PHP using the <strong>array()</strong> function or the shorthand <strong>square bracket [ ]</strong> syntax (available from PHP 5.4 onwards). Both methods work identically. PHP automatically assigns numeric indices starting from 0 to each element in the order they are provided.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Method 1: Using array() function</span><br>
+&nbsp;&nbsp;<span class="var">$cars</span> = <span class="fn">array</span>(<span class="str">"Toyota"</span>, <span class="str">"Honda"</span>, <span class="str">"Ford"</span>, <span class="str">"BMW"</span>);<br><br>
+&nbsp;&nbsp;<span class="cm">// Method 2: Using square brackets []</span><br>
+&nbsp;&nbsp;<span class="var">$fruits</span> = [<span class="str">"Apple"</span>, <span class="str">"Banana"</span>, <span class="str">"Orange"</span>];<br>
+<span class="kw">?&gt;</span>
+</div>
+
+<div class="step-row"><span class="step-num">2</span><strong>Adding Elements</strong></div>
+<p class="theory">You can add new elements to an indexed array either by assigning a value directly to a new index position, or by using the <strong>array_push()</strong> function which appends one or more elements to the end of the array. When using direct assignment, PHP automatically assigns the next available index if you leave the brackets empty.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$cars</span>[<span class="num">4</span>] = <span class="str">"Mercedes"</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Direct index assignment</span><br>
+&nbsp;&nbsp;<span class="fn">array_push</span>(<span class="var">$fruits</span>, <span class="str">"Grapes"</span>); &nbsp;&nbsp;&nbsp;<span class="cm">// Using array_push()</span><br>
+&nbsp;&nbsp;<span class="var">$fruits</span>[] = <span class="str">"Mango"</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Auto-index (appends)</span><br>
+<span class="kw">?&gt;</span>
+</div>
+
+<div class="step-row"><span class="step-num">3</span><strong>Accessing Elements</strong></div>
+<p class="theory">You access elements of an indexed array by specifying the numeric index inside square brackets after the array variable name. Remember that the first element is always at index 0.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$cars</span>[<span class="num">0</span>]; &nbsp;&nbsp;<span class="cm">// Output: Toyota</span><br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$fruits</span>[<span class="num">1</span>]; <span class="cm">// Output: Banana</span><br>
+<span class="kw">?&gt;</span>
+</div>
+
+<div class="step-row"><span class="step-num">4</span><strong>Modifying Elements</strong></div>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$cars</span>[<span class="num">1</span>] = <span class="str">"Chevrolet"</span>; <span class="cm">// Honda is now replaced with Chevrolet</span><br>
+<span class="kw">?&gt;</span>
+</div>
+
+<div class="step-row"><span class="step-num">5</span><strong>Removing Elements</strong></div>
+<p class="theory">The <strong>unset()</strong> function removes a specific element from the array. Note that unset() does not re-index the remaining elements — the indices stay the same, leaving a gap. To re-index, you can use array_values().</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="fn">unset</span>(<span class="var">$cars</span>[<span class="num">2</span>]); <span class="cm">// Removes "Ford" at index 2</span><br>
+<span class="kw">?&gt;</span>
+</div>
+
+<div class="step-row"><span class="step-num">6</span><strong>Iterating Over the Array</strong></div>
+<p class="theory">You can loop through all elements of an indexed array using a <strong>foreach</strong> loop (most common and recommended), a <strong>for</strong> loop (when you need the index), or a <strong>while</strong> loop.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="kw">foreach</span> (<span class="var">$fruits</span> <span class="kw">as</span> <span class="var">$fruit</span>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="var">$fruit</span> . <span class="str">"&lt;br&gt;"</span>;<br>
+&nbsp;&nbsp;}<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Apple<br>Banana<br>Orange<br>Grapes<br>Mango</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">📗</span> PART B — Associative Arrays</div>
+<p class="theory">An <strong>Associative Array</strong> in PHP is a type of array where each element is stored as a <strong>key-value pair</strong>. Unlike indexed arrays where elements are identified by numeric indices (0, 1, 2, ...), associative arrays use <strong>meaningful string keys</strong> that you define yourself to identify and access each element. This makes the code much more readable and self-documenting because the key itself describes what the value represents. For example, instead of remembering that index 0 holds the student's name and index 1 holds the age, you can simply use the keys "name" and "age".</p>
+<p class="theory">Associative arrays are extensively used in PHP for working with configuration settings, representing database records as key-value pairs, processing HTML form data (since $_POST and $_GET are associative arrays), storing user session data, and any other scenario where labelled data is more meaningful than position-based data. The six fundamental operations for associative arrays are exactly the same as indexed arrays — initialization, adding, accessing, modifying, removing, and iterating — but they use string keys instead of numeric indices.</p>
+</div>
+
+<div class="section">
+<div class="step-row"><span class="step-num">1</span><strong>Initialization</strong></div>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$student</span> = <span class="fn">array</span>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span> &nbsp;=> <span class="str">"John"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"age"</span> &nbsp;&nbsp;=> <span class="num">20</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"grade"</span> => <span class="str">"A"</span><br>
+&nbsp;&nbsp;);<br><br>
+&nbsp;&nbsp;<span class="var">$employee</span> = [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=> <span class="str">"Alice"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"department"</span> => <span class="str">"HR"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"salary"</span> &nbsp;&nbsp;&nbsp;&nbsp;=> <span class="num">50000</span><br>
+&nbsp;&nbsp;];<br>
+<span class="kw">?&gt;</span>
+</div>
+
+<div class="step-row"><span class="step-num">2</span><strong>Adding Elements</strong></div>
+<div class="code-block"><span class="var">$student</span>[<span class="str">"city"</span>] = <span class="str">"New York"</span>; <span class="cm">// Adds a new key-value pair</span></div>
+
+<div class="step-row"><span class="step-num">3</span><strong>Accessing Elements</strong></div>
+<div class="code-block">
+<span class="kw">echo</span> <span class="var">$student</span>[<span class="str">"name"</span>]; &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Output: John</span><br>
+<span class="kw">echo</span> <span class="var">$employee</span>[<span class="str">"salary"</span>]; <span class="cm">// Output: 50000</span>
+</div>
+
+<div class="step-row"><span class="step-num">4</span><strong>Modifying Elements</strong></div>
+<div class="code-block"><span class="var">$employee</span>[<span class="str">"salary"</span>] = <span class="num">55000</span>; <span class="cm">// Salary updated from 50000 to 55000</span></div>
+
+<div class="step-row"><span class="step-num">5</span><strong>Removing Elements</strong></div>
+<div class="code-block"><span class="fn">unset</span>(<span class="var">$student</span>[<span class="str">"age"</span>]); <span class="cm">// Removes the "age" key-value pair</span></div>
+
+<div class="step-row"><span class="step-num">6</span><strong>Iterating Over the Array</strong></div>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="kw">foreach</span> (<span class="var">$student</span> <span class="kw">as</span> <span class="var">$key</span> => <span class="var">$value</span>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"<span class="var">$key</span>: <span class="var">$value</span>"</span> . <span class="str">"&lt;br&gt;"</span>;<br>
+&nbsp;&nbsp;}<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">name: John<br>grade: A<br>city: New York</div>
+</div>
+
+<table class="comparison-table">
+<tr><th>Feature</th><th>Indexed Array</th><th>Associative Array</th></tr>
+<tr><td>Key Type</td><td>Numeric (0, 1, 2...)</td><td>String ("name", "age"...)</td></tr>
+<tr><td>Auto-Indexing</td><td>Yes (starts from 0)</td><td>No (you define keys)</td></tr>
+<tr><td>Best For</td><td>Ordered lists</td><td>Labelled / structured data</td></tr>
+<tr><td>Iteration</td><td>foreach ($arr as $val)</td><td>foreach ($arr as $k => $v)</td></tr>
+</table>
+
+<div class="tip-box">
+This question often combines both indexed and associative arrays. Cover all 6 operations for each type (init, add, access, modify, remove, iterate) with code. The comparison table at the end earns extra marks.
+</div>
+
+</div>
+</div>
+
+<!-- QUESTION 5 -->
+<div class="question-card" id="q5">
+<div class="q-header" onclick="toggle('q5')">
+<div class="q-number">Q5</div>
+<div class="q-title">Explain while and do..while Loops in PHP with Examples</div>
+<div class="q-marks">10 Marks</div>
+<div class="q-toggle">▼</div>
+</div>
+<div class="q-body">
+
+<div class="section">
+<div class="section-title"><span class="icon">📘</span> Introduction — What Are Loops?</div>
+<p class="theory">In programming, there are many situations where you need to execute the same block of code <strong>multiple times</strong> — for example, printing numbers from 1 to 100, processing each record from a database query, displaying each item in a shopping cart, or repeatedly asking a user for valid input until they provide it. Writing the same code 100 times would be extremely inefficient, error-prone, and impractical. This is exactly why programming languages provide <strong>loops</strong> — control structures that allow a block of code to be executed repeatedly as long as a specified condition remains true.</p>
+<p class="theory">PHP provides several types of loops, and two of the most fundamental and widely used are the <strong>while loop</strong> and the <strong>do..while loop</strong>. Both of these are <strong>condition-controlled loops</strong>, meaning they continue to execute as long as a given boolean condition evaluates to true. The critical difference between them lies in <strong>when the condition is checked</strong> — the while loop is a <strong>pre-test loop</strong> (entry-controlled loop) that checks the condition before executing the loop body, whereas the do..while loop is a <strong>post-test loop</strong> (exit-controlled loop) that checks the condition after executing the loop body.</p>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">🔁</span> 1. The while Loop (Pre-Test / Entry-Controlled Loop)</div>
+<p class="theory"><strong>Definition:</strong> The while loop in PHP is a pre-test loop that evaluates a <strong>condition before each iteration</strong> of the loop body. If the condition is <strong>true</strong>, the code inside the loop is executed. After the code is executed, the condition is evaluated again. This process repeats until the condition becomes <strong>false</strong>, at which point the loop terminates and the program continues with the next statement after the loop. The most important characteristic of the while loop is that if the condition is false from the very beginning (i.e., on the first check), then the loop body will <strong>never execute even once</strong>. This makes the while loop suitable for situations where you want the loop to execute <strong>zero or more times</strong> depending on the condition.</p>
+<p class="theory">Every properly written while loop must have three essential components: (1) an <strong>initialization</strong> statement that sets the starting value of the loop control variable before the loop begins, (2) a <strong>condition</strong> that is tested before each iteration to determine whether the loop should continue, and (3) an <strong>update</strong> statement inside the loop body that modifies the loop control variable so that the condition will eventually become false. If the update statement is missing or incorrect, the loop will run forever — this is called an <strong>infinite loop</strong>, which is a common programming error that can cause the program to hang or crash.</p>
+
+<div class="code-block">
+<span class="cm">// Syntax</span><br>
+<span class="kw">while</span> (condition) {<br>
+&nbsp;&nbsp;<span class="cm">// Code to be executed repeatedly</span><br>
+}
+</div>
+
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Example: Print numbers from 1 to 5</span><br>
+&nbsp;&nbsp;<span class="var">$count</span> = <span class="num">1</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Step 1: Initialization</span><br><br>
+&nbsp;&nbsp;<span class="kw">while</span> (<span class="var">$count</span> <= <span class="num">5</span>) { &nbsp;&nbsp;<span class="cm">// Step 2: Condition check</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"Count: <span class="var">$count</span>"</span> . <span class="str">"&lt;br&gt;"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="var">$count</span>++; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Step 3: Update (increment)</span><br>
+&nbsp;&nbsp;}<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Count: 1<br>Count: 2<br>Count: 3<br>Count: 4<br>Count: 5</div>
+
+<div class="key-point">
+<div class="label">How It Works — Step by Step</div>
+<strong>Iteration 1:</strong> $count = 1 → condition (1 <= 5) is TRUE → prints "Count: 1" → $count becomes 2<br>
+<strong>Iteration 2:</strong> $count = 2 → condition (2 <= 5) is TRUE → prints "Count: 2" → $count becomes 3<br>
+<strong>Iteration 3:</strong> $count = 3 → condition (3 <= 5) is TRUE → prints "Count: 3" → $count becomes 4<br>
+<strong>Iteration 4:</strong> $count = 4 → condition (4 <= 5) is TRUE → prints "Count: 4" → $count becomes 5<br>
+<strong>Iteration 5:</strong> $count = 5 → condition (5 <= 5) is TRUE → prints "Count: 5" → $count becomes 6<br>
+<strong>Check again:</strong> $count = 6 → condition (6 <= 5) is FALSE → LOOP ENDS
+</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">🔄</span> 2. The do..while Loop (Post-Test / Exit-Controlled Loop)</div>
+<p class="theory"><strong>Definition:</strong> The do..while loop in PHP is a post-test loop that evaluates the condition <strong>after executing the loop body</strong> — not before. This means the code inside the loop will always execute <strong>at least once</strong>, regardless of whether the condition is true or false, because the condition is only checked after the first execution of the loop body. This is the key difference between do..while and while: the while loop might not execute at all if the condition is false initially, but the do..while loop is <strong>guaranteed to execute at least one time</strong>.</p>
+<p class="theory">The do..while loop is particularly useful in situations where you need the loop body to run at least once before checking any condition. A classic real-world example is a <strong>menu-driven program</strong> where you want to display the menu and get user input at least once, and then repeat the process only if the user chooses to continue. Another common example is <strong>input validation</strong> — where you ask the user to enter a value, check whether it is valid, and keep asking until valid input is provided. Notice that in the syntax, the do..while loop ends with a <strong>semicolon (;)</strong> after the closing parenthesis of the while condition — this is one of the very few places in PHP where a control structure requires a semicolon at the end, and forgetting it is a common syntax error.</p>
+
+<div class="code-block">
+<span class="cm">// Syntax</span><br>
+<span class="kw">do</span> {<br>
+&nbsp;&nbsp;<span class="cm">// Code to be executed at least once</span><br>
+} <span class="kw">while</span> (condition)<span class="kw">;</span> &nbsp;<span class="cm">// Note the semicolon!</span>
+</div>
+
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Example: Print numbers from 1 to 5</span><br>
+&nbsp;&nbsp;<span class="var">$count</span> = <span class="num">1</span>;<br><br>
+&nbsp;&nbsp;<span class="kw">do</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"Count: <span class="var">$count</span>"</span> . <span class="str">"&lt;br&gt;"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="var">$count</span>++;<br>
+&nbsp;&nbsp;} <span class="kw">while</span> (<span class="var">$count</span> <= <span class="num">5</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Count: 1<br>Count: 2<br>Count: 3<br>Count: 4<br>Count: 5</div>
+
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="cm">// Proving do..while executes at least once</span><br>
+&nbsp;&nbsp;<span class="var">$x</span> = <span class="num">10</span>;<br><br>
+&nbsp;&nbsp;<span class="cm">// while loop — condition is FALSE, body NEVER runs</span><br>
+&nbsp;&nbsp;<span class="kw">while</span> (<span class="var">$x</span> < <span class="num">5</span>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"while: <span class="var">$x</span>"</span>; <span class="cm">// This NEVER prints</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="var">$x</span>++;<br>
+&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;<span class="cm">// do..while — body runs ONCE even though condition is FALSE</span><br>
+&nbsp;&nbsp;<span class="var">$x</span> = <span class="num">10</span>;<br>
+&nbsp;&nbsp;<span class="kw">do</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"do-while: <span class="var">$x</span>"</span>; <span class="cm">// This prints ONCE!</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="var">$x</span>++;<br>
+&nbsp;&nbsp;} <span class="kw">while</span> (<span class="var">$x</span> < <span class="num">5</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">do-while: 10</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">📊</span> Comparison Table</div>
+<table class="comparison-table">
+<tr><th>Feature</th><th>while Loop</th><th>do..while Loop</th></tr>
+<tr><td>Condition Check</td><td>Before loop body (pre-test)</td><td>After loop body (post-test)</td></tr>
+<tr><td>Minimum Executions</td><td>0 times</td><td>1 time (guaranteed)</td></tr>
+<tr><td>Also Called</td><td>Entry-controlled loop</td><td>Exit-controlled loop</td></tr>
+<tr><td>Ends with Semicolon?</td><td>No</td><td>Yes (after while condition)</td></tr>
+<tr><td>Best Used When</td><td>Loop may not need to run</td><td>Loop must run at least once</td></tr>
+</table>
+</div>
+
+<div class="tip-box">
+Always show the comparison between while and do..while using an example where the condition is initially false — this proves that do..while executes once while the while loop doesn't execute at all. This is the most important distinction examiners look for.
+</div>
+
+</div>
+</div>
+
+<!-- QUESTION 6 -->
+<div class="question-card" id="q6">
+<div class="q-header" onclick="toggle('q6')">
+<div class="q-number">Q6</div>
+<div class="q-title">Explain Any Four Array Functions in PHP with Examples</div>
+<div class="q-marks">10 Marks</div>
+<div class="q-toggle">▼</div>
+</div>
+<div class="q-body">
+
+<div class="section">
+<div class="section-title"><span class="icon">📘</span> Introduction</div>
+<p class="theory">PHP provides an extraordinarily rich library of <strong>built-in array functions</strong> — over 80 functions — that allow developers to perform virtually any operation on arrays without having to write complex custom code from scratch. These functions cover a wide range of operations including counting elements, adding and removing elements, sorting arrays, searching for values, merging arrays, extracting portions of arrays, filtering elements, and much more. Understanding the most commonly used array functions is essential for every PHP developer because arrays are the backbone of data storage and manipulation in PHP applications. Let us now study seven of the most important and most frequently used array functions in PHP, each explained with a complete working example.</p>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">1️⃣</span> count() — Count Elements in an Array</div>
+<p class="theory">The <strong>count()</strong> function is one of the most basic and most frequently used array functions in PHP. It returns the <strong>total number of elements</strong> present in an array as an integer value. This function is extremely useful when you need to know how many items are in a list, how many records were returned from a database query, or when you need to use the element count as the upper limit in a for loop. The count() function accepts an optional second parameter called mode — if you pass the constant <strong>COUNT_RECURSIVE</strong> (or the integer 1), it will count all elements recursively in multidimensional arrays.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$numbers</span> = <span class="fn">array</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>);<br>
+&nbsp;&nbsp;<span class="var">$count</span> = <span class="fn">count</span>(<span class="var">$numbers</span>);<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"Number of elements: <span class="var">$count</span>"</span>;<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Number of elements: 5</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">2️⃣</span> array_push() — Add Elements to End of Array</div>
+<p class="theory">The <strong>array_push()</strong> function is used to add (append) one or more new elements to the <strong>end</strong> of an existing array. It modifies the original array directly (in-place) and returns the new total number of elements in the array after the addition. This function is very commonly used when you are dynamically building a list of items — for example, adding products to a shopping cart, collecting user inputs in a loop, or aggregating results from multiple sources. If you only need to add a single element, the shorthand syntax <strong>$array[] = value;</strong> is more efficient than calling array_push().</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$fruits</span> = <span class="fn">array</span>(<span class="str">"Apple"</span>, <span class="str">"Banana"</span>, <span class="str">"Orange"</span>);<br>
+&nbsp;&nbsp;<span class="fn">array_push</span>(<span class="var">$fruits</span>, <span class="str">"Grapes"</span>, <span class="str">"Watermelon"</span>);<br>
+&nbsp;&nbsp;<span class="fn">print_r</span>(<span class="var">$fruits</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Array ( [0] => Apple [1] => Banana [2] => Orange [3] => Grapes [4] => Watermelon )</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">3️⃣</span> array_pop() — Remove Last Element from Array</div>
+<p class="theory">The <strong>array_pop()</strong> function removes the <strong>last element</strong> from an array and <strong>returns</strong> that removed element. This function modifies the original array by shortening it by one element. If the array is empty or is not an array, it returns NULL. Together with array_push(), the array_pop() function allows arrays to be used as a <strong>stack data structure</strong> (Last-In-First-Out or LIFO), which is useful in many algorithms and applications such as undo operations, expression evaluation, and backtracking algorithms.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$fruits</span> = <span class="fn">array</span>(<span class="str">"Apple"</span>, <span class="str">"Banana"</span>, <span class="str">"Orange"</span>, <span class="str">"Grapes"</span>);<br>
+&nbsp;&nbsp;<span class="var">$last</span> = <span class="fn">array_pop</span>(<span class="var">$fruits</span>);<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"Removed: <span class="var">$last</span>"</span>;<br>
+&nbsp;&nbsp;<span class="fn">print_r</span>(<span class="var">$fruits</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Removed: Grapes<br>Array ( [0] => Apple [1] => Banana [2] => Orange )</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">4️⃣</span> array_reverse() — Reverse Array Order</div>
+<p class="theory">The <strong>array_reverse()</strong> function returns a <strong>new array</strong> with all the elements of the original array arranged in <strong>reverse order</strong>. The last element becomes the first, the second-to-last becomes the second, and so on. This function does not modify the original array — instead, it creates and returns a completely new reversed array. It accepts an optional boolean parameter called <strong>preserve_keys</strong>: if set to true, the original numeric keys are preserved; if false (default), the keys are re-indexed starting from 0.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$numbers</span> = <span class="fn">array</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>);<br>
+&nbsp;&nbsp;<span class="var">$reversed</span> = <span class="fn">array_reverse</span>(<span class="var">$numbers</span>);<br>
+&nbsp;&nbsp;<span class="fn">print_r</span>(<span class="var">$reversed</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Array ( [0] => 5 [1] => 4 [2] => 3 [3] => 2 [4] => 1 )</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">5️⃣</span> array_merge() — Merge Two or More Arrays</div>
+<p class="theory">The <strong>array_merge()</strong> function combines two or more arrays into a <strong>single array</strong>. It appends the values of the second array to the end of the first array, the third array after the second, and so on. If the input arrays have the same string keys, the later value will overwrite the earlier one. However, if the arrays have numeric keys, the values are appended and the keys are re-indexed starting from 0. This function is very useful for combining data from multiple sources.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$fruits1</span> = <span class="fn">array</span>(<span class="str">"Apple"</span>, <span class="str">"Banana"</span>);<br>
+&nbsp;&nbsp;<span class="var">$fruits2</span> = <span class="fn">array</span>(<span class="str">"Orange"</span>, <span class="str">"Grapes"</span>);<br>
+&nbsp;&nbsp;<span class="var">$all</span> = <span class="fn">array_merge</span>(<span class="var">$fruits1</span>, <span class="var">$fruits2</span>);<br>
+&nbsp;&nbsp;<span class="fn">print_r</span>(<span class="var">$all</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Array ( [0] => Apple [1] => Banana [2] => Orange [3] => Grapes )</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">6️⃣</span> array_slice() — Extract a Portion of an Array</div>
+<p class="theory">The <strong>array_slice()</strong> function extracts a <strong>slice (portion)</strong> of an array and returns it as a new array. It takes three main parameters: the array, the <strong>offset</strong> (starting position), and the <strong>length</strong> (how many elements to extract). If the offset is negative, the slice starts that many elements from the end of the array. This function is useful for pagination, extracting top N elements, or working with subsets of data.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$numbers</span> = <span class="fn">array</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>);<br>
+&nbsp;&nbsp;<span class="var">$slice</span> = <span class="fn">array_slice</span>(<span class="var">$numbers</span>, <span class="num">2</span>, <span class="num">2</span>);<br>
+&nbsp;&nbsp;<span class="fn">print_r</span>(<span class="var">$slice</span>);<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Array ( [0] => 3 [1] => 4 )</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="icon">7️⃣</span> array_search() — Search for a Value in an Array</div>
+<p class="theory">The <strong>array_search()</strong> function searches for a specific value within an array and, if found, returns the <strong>key</strong> (index) of the first matching element. If the value is not found, it returns <strong>false</strong>. By default, the comparison is loose (==), but you can pass <strong>true</strong> as the third parameter to enable strict comparison (===), which checks both the value and the data type. This function is extremely useful for finding the position of a specific item in a list.</p>
+<div class="code-block">
+<span class="kw">&lt;?php</span><br>
+&nbsp;&nbsp;<span class="var">$fruits</span> = <span class="fn">array</span>(<span class="str">"Apple"</span>, <span class="str">"Banana"</span>, <span class="str">"Orange"</span>, <span class="str">"Grapes"</span>);<br>
+&nbsp;&nbsp;<span class="var">$key</span> = <span class="fn">array_search</span>(<span class="str">"Orange"</span>, <span class="var">$fruits</span>);<br>
+&nbsp;&nbsp;<span class="kw">echo</span> <span class="str">"Key of 'Orange': <span class="var">$key</span>"</span>;<br>
+<span class="kw">?&gt;</span>
+</div>
+<div class="output-block">Key of 'Orange': 2</div>
+</div>
+
+<table class="comparison-table">
+<tr><th>Function</th><th>Purpose</th><th>Returns</th></tr>
+<tr><td>count()</td><td>Count elements</td><td>Integer (count)</td></tr>
+<tr><td>array_push()</td><td>Add to end</td><td>New array length</td></tr>
+<tr><td>array_pop()</td><td>Remove from end</td><td>Removed element</td></tr>
+<tr><td>array_reverse()</td><td>Reverse order</td><td>New reversed array</td></tr>
+<tr><td>array_merge()</td><td>Merge arrays</td><td>New merged array</td></tr>
+<tr><td>array_slice()</td><td>Extract portion</td><td>New sliced array</td></tr>
+<tr><td>array_search()</td><td>Find value's key</td><td>Key or false</td></tr>
+</table>
+
+<div class="tip-box">
+The question says "any four" — pick the four you remember best and explain them thoroughly. Writing 5-7 with brief explanations also works well. Always include syntax, a code example, and the output for each function.
+</div>
+
+</div>
+</div>
+
+<!-- QUESTION 7 (This maps to original Q6 about scalar types, but user listed it as Q6 twice - using the remaining question) -->
+<div class="question-card" id="q7">
+<div class="q-header" onclick="toggle('q7')">
+<div class="q-number">Q7</div>
+<div class="q-title">Complete Revision — Quick Reference for All 7 Questions</div>
+<div class="q-marks">BONUS</div>
+<div class="q-toggle">▼</div>
+</div>
+<div class="q-body">
+
+<div class="section">
+<div class="section-title"><span class="icon">🎯</span> Exam Strategy & Answer Writing Tips</div>
+<p class="theory">Here is a complete quick-reference summary of all seven questions covered in this masterclass. Use this section as a last-minute revision guide before entering the examination hall. For every 10-mark question, your answer should ideally be <strong>2 to 2.5 pages long</strong> in the answer booklet, and it should always contain the following components: a clear <strong>introduction/definition</strong>, detailed <strong>theory explanation</strong> in your own words, well-written <strong>code examples</strong> with proper PHP opening and closing tags, <strong>output</strong> for each example, and a <strong>summary or comparison table</strong> at the end.</p>
+</div>
+
+<table class="comparison-table">
+<tr><th>Q#</th><th>Topic</th><th>Key Points to Remember</th></tr>
+<tr><td>Q1</td><td>Scalar Data Types</td><td>4 types: Integer, Float, String, Boolean — single values</td></tr>
+<tr><td>Q2</td><td>Miscellaneous Operators</td><td>4 operators: ` ` (exec), @ (error), instanceof (type), ?? (null coalescing)</td></tr>
+<tr><td>Q3</td><td>Compound & Special Types</td><td>Compound: Array, Object | Special: NULL, Resource</td></tr>
+<tr><td>Q4</td><td>Indexed & Associative Arrays</td><td>6 operations each: init, add, access, modify, remove, iterate</td></tr>
+<tr><td>Q5</td><td>while & do..while Loops</td><td>while = pre-test (0+ times) | do..while = post-test (1+ times)</td></tr>
+<tr><td>Q6</td><td>Array Functions</td><td>count, array_push, array_pop, array_reverse, array_merge, array_slice, array_search</td></tr>
+</table>
+
+<div class="key-point">
+<div class="label">Golden Rules for 10-Mark Answers</div>
+<strong>Rule 1:</strong> Always start with a clear definition and introduction paragraph.<br>
+<strong>Rule 2:</strong> Explain the theory in simple, detailed sentences — show the examiner you understand the concept deeply.<br>
+<strong>Rule 3:</strong> Write at least one complete code example with &lt;?php and ?&gt; tags.<br>
+<strong>Rule 4:</strong> Show the expected output for every code example.<br>
+<strong>Rule 5:</strong> End with a comparison table or summary wherever possible.<br>
+<strong>Rule 6:</strong> Use neat headings and sub-headings to organize your answer.<br>
+<strong>Rule 7:</strong> Underline keywords like "scalar", "compound", "pre-test", "post-test" in your answer sheet.
+</div>
+
+<div class="tip-box">
+Practice writing each answer by hand at least twice before the exam. Time yourself — aim to complete each 10-mark answer in 12-15 minutes. Good luck with your exam!
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+PHP Exam Masterclass — All 7 Questions Explained Step by Step<br>
+Study Smart. Write Clearly. Score Full Marks.
+</div>
+
+<script>
+function toggle(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// Auto-open first question
+document.getElementById('q1').classList.add('open');
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+</script>
+</body>
+</html>
